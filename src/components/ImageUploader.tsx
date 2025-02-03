@@ -52,7 +52,7 @@ export const ImageUploader: Component<{ token: string | null }> = (props) => {
     setImageInfo([
       ...imageInfo(),
       {
-        url: `${import.meta.env.VITE_API_BASE_URL}/${id}`,
+        url: `${import.meta.env.VITE_IMAGE_BASE_URL}/${id}`,
         width,
         height,
       },
