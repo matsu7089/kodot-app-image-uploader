@@ -48,6 +48,20 @@ function App() {
     }
   })
 
+  const handleLogout = () => {
+    fetch(import.meta.env.VITE_API_BASE_URL + '/auth/logout', {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        Authorization: `token ${token()}`,
+      },
+    })
+
+    localStorage.removeItem('token')
+    setToken(null)
+    setUser(null)
+  }
+
   return (
     <div class="min-h-screen bg-kodot-blue">
       <header class="p-4 bg-white flex justify-between text-kodot-blue">
@@ -59,9 +73,7 @@ function App() {
           <div>
             <div>user: {user()?.login}</div>
             <div class="text-right">
-              <a href={import.meta.env.VITE_API_BASE_URL + '/auth/logout'}>
-                Logout
-              </a>
+              <a onclick={handleLogout}>Logout</a>
             </div>
           </div>
         </Show>
