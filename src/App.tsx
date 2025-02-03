@@ -63,7 +63,7 @@ function App() {
   }
 
   return (
-    <div class="min-h-screen bg-kodot-blue">
+    <div class="min-h-screen">
       <header class="p-4 bg-white flex justify-between text-kodot-blue">
         <div>
           <div>Kodot App</div>

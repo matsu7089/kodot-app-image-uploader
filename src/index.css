@@ -10,3 +10,7 @@
 @theme {
   --color-kodot-blue: #478cbf;
 }
+
+body {
+  background-color: var(--color-kodot-blue);
+}
