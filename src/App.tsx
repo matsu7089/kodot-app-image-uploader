@@ -9,22 +9,42 @@ type User = {
 }
 
 function App() {
+  const [token, setToken] = createSignal<string | null>(null)
   const [user, setUser] = createSignal<User | null>(null)
 
   onMount(async () => {
+    const paramToken = new URLSearchParams(location.search).get('token')
+    const token = localStorage.getItem('token') || paramToken
+
+    if (!token) {
+      return
+    }
+
+    if (paramToken) {
+      const url = new URL(location.href)
+      url.searchParams.delete('token')
+      history.replaceState(null, '', url.toString())
+    }
+
     const userInfo = await fetch(
       import.meta.env.VITE_API_BASE_URL + '/auth/user',
       {
         method: 'GET',
-        credentials: 'include',
         mode: 'cors',
+        headers: {
+          Authorization: `token ${token}`,
+        },
       }
     )
 
     if (userInfo.ok) {
       const user = await userInfo.json()
       setUser(user)
+      setToken(token)
+      localStorage.setItem('token', token || '')
       loadVips()
+    } else {
+      localStorage.removeItem('token')
     }
   })
 
@@ -48,7 +68,7 @@ function App() {
       </header>
       <div class="m-4 p-4 pixel-border bg-white">
         <Show when={user()} fallback={<Login />}>
-          <ImageUploader />
+          <ImageUploader token={token()} />
         </Show>
       </div>
     </div>

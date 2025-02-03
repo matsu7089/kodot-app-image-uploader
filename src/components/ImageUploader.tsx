@@ -9,7 +9,7 @@ type Info = {
   height: number
 }
 
-export const ImageUploader: Component = () => {
+export const ImageUploader: Component<{ token: string | null }> = (props) => {
   const [uploading, setUploading] = createSignal(false)
   const [imageInfo, setImageInfo] = createSignal<Array<Info>>([])
   let inputRef!: HTMLInputElement
@@ -34,8 +34,8 @@ export const ImageUploader: Component = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'image/webp',
+          Authorization: `token ${props.token}`,
         },
-        credentials: 'include',
         mode: 'cors',
         body: optimizedImage,
       }
