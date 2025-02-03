@@ -73,7 +73,9 @@ function App() {
           <div>
             <div>user: {user()?.login}</div>
             <div class="text-right">
-              <a onclick={handleLogout}>Logout</a>
+              <button class="hover:cursor-pointer" onclick={handleLogout}>
+                Logout
+              </button>
             </div>
           </div>
         </Show>
