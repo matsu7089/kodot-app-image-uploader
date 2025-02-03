@@ -7,6 +7,7 @@ type Info = {
   url: string
   width: number
   height: number
+  blobUrl: string
 }
 
 export const ImageUploader: Component<{ token: string | null }> = (props) => {
@@ -55,6 +56,9 @@ export const ImageUploader: Component<{ token: string | null }> = (props) => {
         url: `${import.meta.env.VITE_IMAGE_BASE_URL}/${id}`,
         width,
         height,
+        blobUrl: URL.createObjectURL(
+          new Blob([optimizedImage], { type: 'image/webp' })
+        ),
       },
     ])
   }
@@ -116,7 +120,7 @@ export const ImageUploader: Component<{ token: string | null }> = (props) => {
         <For each={imageInfo()}>
           {(info) => (
             <div>
-              <img class="object-contain" src={info.url} />
+              <img class="object-contain" src={info.blobUrl} />
               <CopyButton
                 label="本文用テキストをコピー"
                 copyText={linkText(info.url)}
